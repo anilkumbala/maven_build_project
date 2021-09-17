@@ -4,6 +4,8 @@
   <test thread-count="5" name="Test1">
     <classes>
       <class name="mavenforjenkins.UITest"/>
+      
+      
     </classes>
   </test> 
 </suite> 
