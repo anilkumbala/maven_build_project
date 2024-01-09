@@ -8,7 +8,7 @@ pipeline
         {
             steps 
             {
-                echo 'Build App in development'
+                echo 'Build App in development ajay'
             }
         }
 
