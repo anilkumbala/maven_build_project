@@ -9,6 +9,8 @@ pipeline
             steps 
             {
                 echo 'Build App in development ajay'
+                sh 'terraform --version'
+                
             }
         }
 
