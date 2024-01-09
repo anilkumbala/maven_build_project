@@ -8,7 +8,7 @@ pipeline
         {
             steps 
             {
-                echo 'Build App'
+                echo 'Build App in dev'
             }
         }
 
