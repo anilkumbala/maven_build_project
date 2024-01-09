@@ -24,7 +24,7 @@ pipeline
         {
             steps 
             {
-                echo 'Deploy App in prod'
+                echo 'Deploy App in production'
             }
         }
     }
