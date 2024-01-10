@@ -16,12 +16,12 @@ pipeline
         {
             steps 
             {
-                dir("ops/ArtifactRegistry/prod"){
+                
                     sh 'terraform --version'
                     sh 'terraform init '
                     sh 'terraform plan '
                     //sh 'terraform apply -auto-approve'
-                    }
+                    
                 /*withCredentials([[$class:'GCPCredentialsBinding', credentialsId:'TERRAFORM_NON_PROD']]) {
                     script{
                         sh 'echo running Artifact Registry  terraform scripts'
