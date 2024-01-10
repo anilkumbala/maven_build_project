@@ -4,7 +4,7 @@ pipeline
 
     stages 
     {
-        stage('Artifact Registry Creation'){
+        stage('Artifact Registry Creation')
              
         {
             steps 
