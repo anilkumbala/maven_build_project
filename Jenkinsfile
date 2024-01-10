@@ -16,9 +16,13 @@ pipeline
         {
             steps 
             {
-                sh 'terraform --version'
-                sh 'terraform init'
-                withCredentials([[$class:'GCPCredentialsBinding', credentialsId:'TERRAFORM_NON_PROD']]) {
+                dir("ops/ArtifactRegistry/prod"){
+                    sh 'terraform --version'
+                    sh 'terraform init '
+                    sh 'terraform plan '
+                    //sh 'terraform apply -auto-approve'
+                    }
+                /*withCredentials([[$class:'GCPCredentialsBinding', credentialsId:'TERRAFORM_NON_PROD']]) {
                     script{
                         sh 'echo running Artifact Registry  terraform scripts'
                         if(env.BRANCH_NAME == 'main'){
@@ -44,10 +48,10 @@ pipeline
                             }
                         } 
                     }
-                }
+                }*/
             }
         }
-        }
+    }
 
         stage('docker image Creation ') 
         {
