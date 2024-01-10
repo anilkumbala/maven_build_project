@@ -4,17 +4,52 @@ pipeline
 
     stages 
     {
-        stage('Build') 
+        stage('Artifact Registry Creation'){
+            when{
+                anyof{
+                    branch 'main';
+                    branch 'test';
+                    branch 'develop';
+                    
+                }
+            } 
         {
             steps 
             {
-                echo 'Build App in development ajay'
                 sh 'terraform --version'
-                
+                sh 'terraform init'
+                withCredentials([[$class:'GCPCredentialsBinding', credentialsId:'TERRAFORM_NON_PROD']]) {
+                    script{
+                        sh 'echo running Artifact Registry  terraform scripts'
+                        if(env.BRANCH_NAME == 'main'){
+                            dir("ops/ArtifactRegistry/prod"){
+                                sh 'terraform --version'
+                                sh 'terraform init '
+                                sh 'terraform plan '
+                                //sh 'terraform apply -auto-approve'
+                            }
+                        } else if(env.BRANCH_NAME == 'test'){
+                            dir("ops/ArtifactRegistry/uat"){
+                                sh 'terraform --version'
+                                sh 'terraform init '
+                                sh 'terraform plan '
+                                //sh 'terraform apply -auto-approve'
+                            }
+                        } else if(env.BRANCH_NAME == 'develop'){
+                            dir("ops/ArtifactRegistry/dev"){
+                                sh 'terraform --version'
+                                sh 'terraform init '
+                                sh 'terraform plan '
+                                //sh 'terraform apply -auto-approve'
+                            }
+                        } 
+                    }
+                }
             }
         }
+        }
 
-        stage('Test') 
+        stage('docker image Creation ') 
         {
             steps 
             {
@@ -36,7 +71,7 @@ pipeline
 
     	always
     	{
-    		emailext body: 'Summary', subject: 'Pipeline Status', to: 'anilkumbala@gmail.com'
+    		cleanWs()
     	}
 
     }
