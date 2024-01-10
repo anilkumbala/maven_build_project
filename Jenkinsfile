@@ -5,18 +5,11 @@ pipeline
     stages 
     {
         stage('Artifact Registry Creation'){
-            when{
-                anyof{
-                    branch 'main';
-                    branch 'test';
-                    branch 'develop';
-                    
-                }
-            } 
+             
         {
             steps 
             {
-                
+                    echo 'Artifact Registry Creation'
                     sh 'terraform --version'
                     sh 'terraform init '
                     sh 'terraform plan '
