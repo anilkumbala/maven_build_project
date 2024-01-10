@@ -2,6 +2,10 @@ pipeline
 {
     agent any
 
+    environment {
+        GOOGLE_APPLICATION_CREDENTIALS = credentials('anilgcpcredentials')
+    }
+
     stages 
     {
         stage('Artifact Registry Creation')
@@ -9,6 +13,9 @@ pipeline
         {
             steps 
             {
+                // Set up Google Cloud SDK
+                    sh 'gcloud auth activate-service-account --key-file=$GOOGLE_APPLICATION_CREDENTIALS'
+                    sh 'gcloud config set project excellent-guide-410011'
                     echo 'Artifact Registry Creation'
                     sh 'terraform --version'
                     sh 'terraform init '
